@@ -23,7 +23,7 @@ Este proyecto simula un sistema básico de gestión de tareas, orientado a empre
 
 ---
 
-## 🚀 Cómo ejecutar el proyecto
+##  Cómo ejecutar el proyecto
 
 1. **Instalar dependencias**  
 ```bash
