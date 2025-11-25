@@ -1,9 +1,9 @@
-from flask import Flask, request, jsonify # type: ignore
+from flask import Flask, request, jsonify  # type: ignore
 from models import users, tasks
 
 app = Flask(__name__)
 
-# Registro
+# Registro de usuarios
 @app.route('/register', methods=['POST'])
 def register():
     data = request.json
@@ -26,31 +26,46 @@ def login():
     email = data.get("email")
     password = data.get("password")
 
-    if users.get(email) == password:
-        return jsonify({"message": "Login exitoso"}), 200
-    return jsonify({"error": "Credenciales inválidas"}), 401
+    if email not in users:
+        return jsonify({"error": "Usuario no registrado"}), 404
+
+    if users[email] != password:
+        return jsonify({"error": "Contraseña incorrecta"}), 401
+
+    return jsonify({"message": "Login exitoso"}), 200
 
 # Crear tarea
 @app.route('/tasks', methods=['POST'])
 def create_task():
-    data = request.json
-    title = data.get("title")
-    description = data.get("description")
-    assigned_to = data.get("assigned_to")
+    data = request.get_json()
 
-    if not title:
-        return jsonify({"error": "El título es obligatorio"}), 400
+    # Si es una sola tarea (dict), lo convertimos en lista para tratarlo igual
+    if isinstance(data, dict):
+        data = [data]
 
-    task = {
-        "title": title,
-        "description": description,
-        "assigned_to": assigned_to,
-        "status": "pendiente"
-    }
-    tasks.append(task)
-    return jsonify({"message": "Tarea creada"}), 201
+    created = []
 
-# Ver todas las tareas
+    for item in data:
+        title = item.get("title")
+        description = item.get("description")
+        assigned_to = item.get("assigned_to")
+
+        if not title:
+            return jsonify({"error": "El título es obligatorio en una o más tareas"}), 400
+
+        task = {
+            "title": title,
+            "description": description,
+            "assigned_to": assigned_to,
+            "status": "pendiente"
+        }
+        tasks.append(task)
+        created.append(task)
+
+    return jsonify({"message": f"{len(created)} tareas creadas", "tareas": created}), 201
+
+
+# Obtener todas las tareas
 @app.route('/tasks', methods=['GET'])
 def list_tasks():
     return jsonify(tasks), 200
@@ -58,4 +73,3 @@ def list_tasks():
 # Iniciar servidor
 if __name__ == '__main__':
     app.run(debug=True)
-
