@@ -1,35 +1,30 @@
-# Sistema de Gestión de Tareas (Simulado)
 
-Este proyecto simula un sistema básico de gestión de tareas con funcionalidades de:
-- Registro e inicio de sesión de usuarios
-- Creación y listado de tareas
-- Pruebas automatizadas con unittest
+# 🗂️ Sistema de Gestión de Tareas (Simulado)
 
-## Requisitos
-- Python 3.8+
-- Flask
+Este proyecto simula un sistema básico de gestión de tareas, orientado a empresas que necesitan asignar y visualizar tareas entre sus empleados. Fue desarrollado con Python y Flask, e incluye pruebas tanto automatizadas como manuales.
 
-## Cómo ejecutar
-1. Instalar dependencias:
-   pip install -r requirements.txt
+---
 
-2. Iniciar el servidor:
-   python app.py
+## ✅ Funcionalidades principales
 
-3. Ejecutar pruebas:
-   python test_app.py
+- Registro de usuarios
+- Inicio de sesión
+- Creación de tareas
+- Visualización de todas las tareas
+- Pruebas automatizadas con `unittest`
+- Pruebas manuales con **Postman**
 
-## Flujo del sistema completo
+---
 
-El usuario se registra con su email y contraseña
-➤ Se guarda en el diccionario users
+## ⚙️ Requisitos del sistema
 
-El usuario inicia sesión
-➤ Se valida que exista y que la contraseña sea correcta
+- Python 3.8 o superior  
+- Flask  
 
-El usuario crea tareas
-➤ Se envía título, descripción y a quién está asignada
-➤ Se guarda en la lista tasks
+---
 
-El usuario puede consultar las tareas
-➤ Se devuelve la lista como respuesta JSON
+## 🚀 Cómo ejecutar el proyecto
+
+1. **Instalar dependencias**  
+```bash
+pip install -r requirements.txt
